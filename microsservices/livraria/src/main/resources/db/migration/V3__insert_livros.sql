@@ -1,0 +1,1 @@
+INSERT INTO "livro"(id, name, genero) VALUES ('8e424d48-1b44-11ed-861d-0242ac120002','A fundação','ficção');

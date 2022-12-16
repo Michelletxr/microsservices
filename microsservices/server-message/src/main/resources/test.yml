@@ -1,0 +1,51 @@
+#add buckhead
+
+resilience4j.circuitbreaker:
+    instances:
+      circuitBreakerService:
+        ringBufferSizeInHalfOpenState: 10s
+        ringBufferSizeInClosedState: '5'
+        failureRateThreshold: '5'
+        registerHealthIndicator: 'true'
+        waitDurationInOpenState: 5s
+        recordExceptions:
+          - java.lang.RuntimeException
+          - java.io.IOException
+
+resilience4j.retry:
+  instances:
+    retryService:
+      maxAttempts: 5
+      waitDuration: 50s
+      retryExceptions:
+        - org.springframework.web.client.HttpServerErrorException
+        - java.io.IOException
+
+resilience4j.bulkhead:
+  instances:
+    bulkheadService:
+      maxWaitDuration: 5ms
+      maxConcurrentCalls: 5
+
+resilience4j.thread-pool-bulkhead:
+  instances:
+    bulkheadService:
+      maxThreadPoolSize: 1
+      coreThreadPoolSize: 1
+      queueCapacity: 1
+      writableStackTraceEnabled: true
+
+
+eureka:
+  instance:
+    preferIpAddress: 'true'
+  client:
+    fetchRegistry: 'true'
+    registerWithEureka: 'true'
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: 'false'
